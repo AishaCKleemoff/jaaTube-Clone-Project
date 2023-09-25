@@ -1,25 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "./VideoShow.css";
 // import ErrorMessage from "../errors/ErrorMessage";
 import { getOneVideo } from "../../api/fetch";
 // Import CommentForm when needed
 
-export default function VideoShow(video) {
-    const [individual, setIndividual] = useState([]); // Initialize as null
-  const { id } = useParams();
+export default function VideoShow() {
+  const { etag } = useParams();
+  console.log(etag)
+    const [individual, setIndividual] = useState(null); // Initialize as null
     // console.log(id)
 
     useEffect(() => {
-        getOneVideo(id,1)
+        getOneVideo(etag,1)
           .then((data) => {
+            console.log(data)
             setIndividual(data); // Set the entire video object
             console.log(data);
           })
           .catch((error) => {
             console.error('Error fetching video:', error);
           });
-      }, [id]);
+      }, [etag]);
 
       const [name, setName] = useState("");
   const [comment, setComment] = useState("");
@@ -43,7 +45,9 @@ export default function VideoShow(video) {
     setName("");
     setComment("");
   };
-
+  if (individual === null) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="container">
       <div className="row">
@@ -53,7 +57,7 @@ export default function VideoShow(video) {
               individual.map((videoInfo) => (
                 <section
                   className="individualVideoCard mb-4"
-                  key={videoInfo.etag}
+                  key={videoInfo}
                 >
                   <h1 className="videoName">{videoInfo.snippet.title}</h1>
                   <div className="videoImage">

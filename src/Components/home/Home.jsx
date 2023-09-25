@@ -55,8 +55,8 @@ const handleInputChange = (e) => {
           videos.map((video) => (
             <section className="individualCard" key={video.etag}>
               <Link to={`/VideoShow/${video.etag}`}>
-              <img src={video.snippet.thumbnails.default.url} alt={video.snippet.title} />
-              </Link>
+  <img src={video.snippet.thumbnails.default.url} alt={video.snippet.title} />
+</Link>
               <h3 className="title">{video.snippet.title}</h3>
             <p className="description">{video.snippet.title}</p>
             </section>
